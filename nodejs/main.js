@@ -11,15 +11,20 @@ var knx = require('knx');
 // import readline lib
 const readline = require('readline');
 
-// Prensa : '192.168.8.254'
-// Comidas: '192.168.2.40'
+// Multiple/prensa : '192.168.8.254'
+// Comidas: '192.168.2.86'
 // Auditorio: '192.168.6.254'
+// VIP : 192.168.4.214
+
 // Some globals
 const ipAddr = '192.168.4.214';
 const ipPort = 3671;
 const logLevel = 'trace';               // This can be 'error', 'warn', 'info' (default), 'debug', or 'trace'.
-const groupAddDevice = "3/0/3"          // Device as a group direction
-
+const groupAddDevice = "2/0/0";          // "3/0/3"          // Device as a group direction
+/*
+2/0/1 controllos just off the main lights
+2/0/0 controlls the on/off vom the main lights
+*/
 // create connetion to address
 var connection = knx.Connection({
     // ip address and port of the KNX router or interface
