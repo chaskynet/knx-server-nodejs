@@ -11,16 +11,21 @@ var knx = require('knx');
 // import readline lib
 const readline = require('readline');
 
-// Multiple/prensa : '192.168.8.254'
-// Comidas: '192.168.2.86'
-// Auditorio: '192.168.6.254'
-// VIP : 192.168.4.214
+
+// Multiple/prensa :    '192.168.8.254'
+// Comidas:             '192.168.2.86'
+// Auditorio:           '192.168.6.254'
+// VIP :                '192.168.4.214'
+const multiple = '192.168.8.254';
+const comidas = '192.168.2.86';
+const auditorio = '192.168.6.254';
+const vip = '192.168.4.214'
 
 // Some globals
-const ipAddr = '192.168.4.214';
+const ipAddr = vip;
 const ipPort = 3671;
 const logLevel = 'trace';               // This can be 'error', 'warn', 'info' (default), 'debug', or 'trace'.
-const groupAddDevice = "2/0/0";          // "3/0/3"          // Device as a group direction
+const groupAddDevice = "3/0/3"; //"2/0/0";          // "3/0/3"          // Device as a group direction
 /*
 2/0/1 controllos just off the main lights
 2/0/0 controlls the on/off vom the main lights
@@ -62,10 +67,21 @@ function turnOff() {
 }
 
 function testFunction() {
-    console.log('hey i am here')
+    var stdin = process.openStdin();
+    stdin.addListener("data", function(d) {
+        // note:  d is an object, and when converted to a string it will
+        // end with a linefeed.  so we (rather crudely) account for that  
+        // with toString() and then trim() 
+        console.log("you entered: [" + 
+            d.toString().trim() + "]");
+      });
 }
 
 
+function insertGAdd() {
+    const groupAddDevice = "3/0/3"; //"2/0/0";          // "3/0/3"          // Device as a group direction
+    
+}
 // Grab User inputs from keyboard
 readline.emitKeypressEvents(process.stdin);
 process.stdin.setRawMode(true);
@@ -73,17 +89,19 @@ process.stdin.setRawMode(true);
 process.stdin.on('keypress', (str, key) => {
     if (key.name==='q'){
         process.exit()
-    }else if (key.name ==='1') {
+    }else if (key.name ==='1'){
         console.log('pressed 1')
         turnOn()
     }else if (key.name ==='2'){
         console.log('pressed 2')
         turnOff()
     }else if (key.name==='3'){
-        testFunction()
+        console.log('You pressed 3')
+        //testFunction()
     }
 });
 
+            
 console.log('Press q for exit')
 console.log('Press 1 for Turn ON')
 console.log('Press 2 for Turn OFF')
