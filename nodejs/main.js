@@ -25,7 +25,8 @@ const vip = '192.168.4.214'
 const ipAddr = vip;
 const ipPort = 3671;
 const logLevel = 'trace';               // This can be 'error', 'warn', 'info' (default), 'debug', or 'trace'.
-const groupAddDevice = "3/0/3"; //"2/0/0";          // "3/0/3"          // Device as a group direction
+const groupAddDevice = "7/0/0"; //"2/0/0";          // "3/0/3"          // Device as a group direction
+
 /*
 2/0/1 controllos just off the main lights
 2/0/0 controlls the on/off vom the main lights
@@ -78,10 +79,6 @@ function testFunction() {
 }
 
 
-function insertGAdd() {
-    const groupAddDevice = "3/0/3"; //"2/0/0";          // "3/0/3"          // Device as a group direction
-    
-}
 // Grab User inputs from keyboard
 readline.emitKeypressEvents(process.stdin);
 process.stdin.setRawMode(true);
@@ -101,6 +98,46 @@ process.stdin.on('keypress', (str, key) => {
     }
 });
 
+/*
+class KNXListener {
+    constructor(IpAdd, groupAdrs){
+        this.IpAdd = IpAdd;
+        this.groupAdrs = groupAdrs;
+
+        this.connection = knx.Connection({
+            // ip address and port of the KNX router or interface
+            ipAddr: this.IpAdd, 
+            ipPort: 3671,
+            logLevel: 'trace',
+            handlers: {
+                connected: function() {
+                    console.log('Connected!');
+                    console.log('Hurray, I can talk KNX!');
+                },
+                event: function (evt, src, dest, value) {
+                console.log("%s **** KNX EVENT: %j, src: %j, dest: %j, value: %j",
+                    new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+                    evt, src, dest, value);
+                },
+                // get notified on connection errors
+                error: function(connstatus) {
+                        console.log("**** ERROR: %j", connstatus);
+                    }
+            }
+        })
+    }
+    turnOn() {
+        console.log('Turnning ON: ', groupAddDevice);
+        connection.write(groupAddDevice, 1);
+    };
+    
+    turnOff() {
+        console.log('Turnning OFF:', groupAddDevice);
+        connection.write(groupAddDevice, 0);
+    };
+        
+}
+*/
             
 console.log('Press q for exit')
 console.log('Press 1 for Turn ON')
